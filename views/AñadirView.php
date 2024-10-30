@@ -19,11 +19,11 @@ class AñadirViews
         $ingresos = $this->controller->getAllIngresos();
         if (count($ingresos) > 0) {
             foreach ($ingresos as $ingreso) {
-                $id = $contacto->get('id');
+                $id = $ingresos->get('id');
                 $rows .= '<tr>';
-                $rows .= '   <td>' . $contacto->get('nombre') . '</td>';
-                $rows .= '   <td>' . $contacto->get('email') . '</td>';
-                $rows .= '   <td>' . $contacto->get('telefono') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('nombre') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('email') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('telefono') . '</td>';
                 $rows .= '   <td>';
                 $rows .= '      <a href="formularioContacto.php?cod=' . $id . '">modificar</a>';
                 $rows .= '   </td>';
