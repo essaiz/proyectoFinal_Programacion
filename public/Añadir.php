@@ -27,7 +27,7 @@ $añadirView = new AñadirViews();
 
         <!-- tabla de contactos -->
         <h2>Lista de Ingresos</h2>
-        <?php echo $añadirView->getTable(); ?>
+        <?php //echo $añadirView->getTable(); ?>
     </div>
 </body>
 <style>
