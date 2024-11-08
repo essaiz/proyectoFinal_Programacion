@@ -45,7 +45,7 @@ class Ingreso
             array_push($Ingreso, $Ingresos);
         }
         $db->close();
-        return $Ingresos;
+        return $Ingreso;
     }
     function save (){
         $sql = ingresosQueries::insert($this);

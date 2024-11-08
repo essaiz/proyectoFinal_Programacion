@@ -17,7 +17,7 @@ class AñadirViews
     {   
         $rows = '';
         $ingresos = $this->controller->getAllIngresos();
-        if (count($ingresos) >= 0) {
+        if (count($ingresos) > 0) {
             foreach ($ingresos as $ingresos) {
                 $id = $ingresos->get('id');
                 $rows .= '<tr>';
@@ -27,14 +27,8 @@ class AñadirViews
                 $rows .= '   <td>' . $ingresos->get('horaIngreso') . '</td>';
                 $rows .= '   <td>' . $ingresos->get('horaSalida') . '</td>';
                 $rows .= '   <td>' . $ingresos->get('idPrograma') . '</td>';
-                $rows .= '   <td>' . $ingresos->get('idResponsable') . '</td>';               
+                $rows .= '   <td>' . $ingresos->get('idResponsable') . '</td>';            
                 $rows .= '   <td>' . $ingresos->get('idSala') . '</td>';
-                $rows .= '   <td>';
-                $rows .= '      <a href="formularioContacto.php?cod=' . $id . '">modificar</a>';
-                $rows .= '   </td>';
-                $rows .= '   <td>';
-                $rows .= '      <button onClick="eliminarContacto(' . $id . ')">Borrar</button>';
-                $rows .= '   </td>';
                 $rows .= '</tr>';
             }
         } else {
