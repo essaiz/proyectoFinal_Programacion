@@ -6,13 +6,11 @@ require '../controllers/controladores_ingreso.php';
 require '../views/AñadirView.php';
 
 
-use App\views\AñadirViews;
-
 use app\views\AñadirViews;
 
 $AñadirViews = new  AñadirViews();
 $title = empty($_GET['cod'])?'Añadir ingreso':'';
-//$form = $AñadirViews->getFormIngresos($_get);
+$form = $AñadirViews->getFormIngresos();
 
 
 $añadirView = new AñadirViews();
@@ -36,7 +34,7 @@ $añadirView = new AñadirViews();
 
         <!-- tabla de contactos -->
         <h2>Lista de Ingresos</h2>
-        <?php //echo $añadirView->getTable(); ?>
+        <?php echo $añadirView->getTable(); ?>
     </div>
 </body>
 <style>

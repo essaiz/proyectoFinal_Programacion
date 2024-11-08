@@ -10,25 +10,25 @@ class AñadirViews
 
     function __construct()
     {
-        $this->controller = new IngresoController();
+       $this->controller = new IngresoController();
     }
 
-    function getFormIngresos($data = [])
-    {
-        $nombre = isset($data['nombre']) ? $data['nombre'] : '';
-        $codigo = isset($data['codigo']) ? $data['codigo'] : '';
-        $programa = isset($data['programa']) ? $data['programa'] : '';
-        $sala = isset($data['sala']) ? $data['sala'] : '';
-        $registrador = isset($data['registrador']) ? $data['registrador'] : '';
+    function getTable()
+    {   
         $rows = '';
         $ingresos = $this->controller->getAllIngresos();
-        if (count($ingresos) > 0) {
-            foreach ($ingresos as $ingreso) {
+        if (count($ingresos) >= 0) {
+            foreach ($ingresos as $ingresos) {
                 $id = $ingresos->get('id');
                 $rows .= '<tr>';
-                $rows .= '   <td>' . $ingresos->get('nombre') . '</td>';
-                $rows .= '   <td>' . $ingresos->get('email') . '</td>';
-                $rows .= '   <td>' . $ingresos->get('telefono') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('nombreEstudiante') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('codigoEstudiante') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('fechaIngreso') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('horaIngreso') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('horaSalida') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('idPrograma') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('idResponsable') . '</td>';               
+                $rows .= '   <td>' . $ingresos->get('idSala') . '</td>';
                 $rows .= '   <td>';
                 $rows .= '      <a href="formularioContacto.php?cod=' . $id . '">modificar</a>';
                 $rows .= '   </td>';
@@ -46,8 +46,13 @@ class AñadirViews
         $table .= '  <thead>';
         $table .= '     <tr>';
         $table .= '         <th>Nombre</th>';
-        $table .= '         <th>Email</th>';
-        $table .= '         <th>Teléfono</th>';
+        $table .= '         <th>Codigo</th>';
+        $table .= '         <th>fecha Ingreso</th>';
+        $table .= '         <th>hora Ingreso</th>';
+        $table .= '         <th>hora Salida</th>';
+        $table .= '         <th>Programa</th>';
+        $table .= '         <th>Responsable</th>';
+        $table .= '         <th>Sala</th>';
         $table .= '     </tr>';
         $table .= '  </thead>';
         $table .= ' <tbody>';
@@ -55,7 +60,16 @@ class AñadirViews
         $table .= ' </tbody>';
         $table .= '</table>';
         return $table;
-        
+    }
+    function getFormIngresos($data = [])
+    {
+        $nombre = isset($data['nombre']) ? $data['nombre'] : '';
+        $codigo = isset($data['codigo']) ? $data['codigo'] : '';
+        $programa = isset($data['programa']) ? $data['programa'] : '';
+        $sala = isset($data['sala']) ? $data['sala'] : '';
+        $registrador = isset($data['registrador']) ? $data['registrador'] : '';
+        $rows = '';
+        $ingresos = $this->controller->getAllIngresos();
         $form = '<div class="container">';
         $form .= '<h2>Registrar Ingreso del Estudiante</h2>';
         $form .= '<form method="POST" action="procesar_ingreso.php">'; 
@@ -133,7 +147,6 @@ class AñadirViews
 
         return $form;
     }
-}
     function getMsgNewIngreso($datosFormulario)
     {
         $datos = [

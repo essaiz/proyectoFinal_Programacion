@@ -11,6 +11,7 @@ class IngresoController
     {
         return Ingreso::all();
     }
+    
     function saveContacto($datos)
     {
         $Ingresos = new Ingreso();

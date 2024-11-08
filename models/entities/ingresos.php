@@ -30,11 +30,11 @@ class Ingreso
         $sql = ingresosQueries::selectAll();
         $db = new ingresos_salas_db();
         $result = $db->query($sql);
-        $Ingreso = [];
+        $Ingreso = [];  
         while ($row = $result->fetch_assoc()) {
             $Ingresos = new Ingreso();
             $Ingresos->set('id', $row['id']);
-            $Ingresos->set('nombreEstudiante', $row['nombreEstudiante']);
+            $Ingresos->set('nombreEstudiante', $row['nombreEstudiante']); 
             $Ingresos->set('codigoEstudiante', $row['codigoEstudiante']);
             $Ingresos->set('fechaIngreso', $row['fechaIngreso']);
             $Ingresos->set('horaIngreso', $row['horaIngreso']);

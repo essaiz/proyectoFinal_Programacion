@@ -9,7 +9,7 @@ class ingresos_salas_db
     private $host = 'localhost';
     private $user = 'root';
     private $pwd = '';
-    private $name = 'ingresos_salas_db';
+    private $name = 'Ingresos_salas_db';
     private $conex;
 
     function __construct()
