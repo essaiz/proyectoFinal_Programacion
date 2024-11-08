@@ -16,14 +16,14 @@ class AñadirViews
     function getTable()
     {
         $rows = '';
-        $contactos = $this->controller->getAllContactos();
-        if (count($contactos) > 0) {
-            foreach ($contactos as $contacto) {
-                $id = $contacto->get('id');
+        $ingresos = $this->controller->getAllIngresos();
+        if (count($ingresos) > 0) {
+            foreach ($ingresos as $ingreso) {
+                $id = $ingresos->get('id');
                 $rows .= '<tr>';
-                $rows .= '   <td>' . $contacto->get('nombre') . '</td>';
-                $rows .= '   <td>' . $contacto->get('email') . '</td>';
-                $rows .= '   <td>' . $contacto->get('telefono') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('nombre') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('email') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('telefono') . '</td>';
                 $rows .= '   <td>';
                 $rows .= '      <a href="formularioContacto.php?cod=' . $id . '">modificar</a>';
                 $rows .= '   </td>';
@@ -51,5 +51,28 @@ class AñadirViews
         $table .= '</table>';
         return $table;
         
+    }
+    function getMsgNewIngreso($datosFormulario)
+    {
+        $datos = [
+            "Codigo estudiante" => $datosFormulario['codigoEstudiante'],
+            "Nombre estudiante" => $datosFormulario['nombreEstudiante'],
+            "Numero programa" => $datosFormulario['idPrograma'],
+            "Fecha de ingreso" => $datosFormulario['fechaIngreso'],
+            "Hora de ingreso" => $datosFormulario['horaIngreso'],
+            "Hora de salida " => $datosFormulario['horaSalida'],
+            "Responsable" => $datosFormulario['idResponsable'],
+            "Numero de sala" => $datosFormulario['idSala'],
+
+
+        ];
+        $confirmarAccion = $this->controller->saveContacto($datos);
+        $msg = '<h2>Resultado de la operación</h2>';
+        if ($confirmarAccion) {
+            $msg .= '<p>Datos del contacto guardados.</p>';
+        } else {
+            $msg .= '<p>No se pudo guardar la información del contacto</p>';
+        }
+        return $msg;
     }
 }
