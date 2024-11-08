@@ -5,7 +5,15 @@ require '../models/queries/ingresosquerys.php';
 require '../controllers/controladores_ingreso.php';
 require '../views/AñadirView.php';
 
+
 use App\views\AñadirViews;
+
+use app\views\AñadirViews;
+
+$AñadirViews = new  AñadirViews();
+$title = empty($_GET['cod'])?'Añadir ingreso':'';
+//$form = $AñadirViews->getFormIngresos($_get);
+
 
 $añadirView = new AñadirViews();
 
@@ -16,6 +24,7 @@ $añadirView = new AñadirViews();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Añadir Ingreso de Estudiante</title>
    
 </head>
@@ -52,3 +61,18 @@ $añadirView = new AñadirViews();
         }
     </style>
 </html>
+=======
+    <title>AñadirViews</title>
+</head>
+<body>
+    <header>
+        <h1>Añadir ingreso</h1>
+    </header>
+    <section>
+        <?php  
+        
+        ?>
+    </section>
+</body>
+</html>
+
