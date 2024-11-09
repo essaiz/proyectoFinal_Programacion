@@ -13,13 +13,13 @@ class AñadirViews
        $this->controller = new IngresoController();
     }
 
-    function getBusqueda($fromDate, $toDate){
+    function getBusqueda(){
         $rows = '';
         if (isset($_GET['From_date']) && isset($_GET['to_date'])) {
             $fromDate = $_GET['From_date'];
             $toDate = $_GET['to_date'];
         }
-        $ingresos = $this->controller->buscador_fechas($fromDate, $toDate);
+        //$ingresos = $this->controller->buscador_fechas($fromDate, $toDate);
         $form =  '<form action="Añadirview.php" method="get">';
         $form .=     '<div class="form-container">' ;
         $form .=         '<div class="form-grup">';
@@ -173,7 +173,7 @@ class AñadirViews
         $form .= '   </div>';
         $form .= '   <div class="form-group">';
         $form .= '       <label for="created_at">Creado el dia:</label>';
-        $form .= '       <input type="datetime-loca" id="created_at" name="created_at" value="' . $created_at . '" required>';
+        $form .= '       <input type="date" id="created_at" name="created_at" value="' . $created_at . '" required>';
         $form .= '   </div>';
         $form .= '   <button type="submit" class="btn">Registrar Ingreso</button>';
         $form .= '</form>';

@@ -36,7 +36,10 @@ $añadirView = new AñadirViews();
         $fecha = date('Y-m-d');
         echo $añadirView->getTable($fecha); ?>
         <br>
-        
+        <?php
+        echo $añadirView->getBusqueda();
+         ?>
+
         <br>
         
     </section>
