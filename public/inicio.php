@@ -44,7 +44,4 @@ $añadirView = new AñadirViews();
         
     </section>
 </body>
-<style>
-        
-    </style>
 </html>
