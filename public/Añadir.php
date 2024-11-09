@@ -34,7 +34,9 @@ $añadirView = new AñadirViews();
 
         <!-- tabla de contactos -->
         <h2>Lista de Ingresos</h2>
-        <?php echo $añadirView->getTable(); ?>
+        <?php 
+        $fecha = '1';
+        echo $añadirView->getTable($fecha); ?>
     </div>
 </body>
 <style>

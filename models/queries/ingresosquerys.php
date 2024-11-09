@@ -8,6 +8,18 @@ class ingresosQueries
     {
         return "select * from ingresos";
     }
+    static function selectsala()
+    {
+        return "select * from salas";
+    }
+    static function selectprograma()
+    {
+        return "select * from programas";
+    }
+    static function selectresponsables()
+    {
+        return "select * from responsables";
+    }
 
     static function insert($ingreso){
         $nombre = $ingreso->get('nombreEstudiante');

@@ -13,29 +13,49 @@ class AñadirViews
        $this->controller = new IngresoController();
     }
 
-    function getTable()
+    function getTable($fecha)
     {   
         $rows = '';
         $ingresos = $this->controller->getAllIngresos();
-        if (count($ingresos) > 0) {
-            foreach ($ingresos as $ingresos) {
-                $id = $ingresos->get('id');
+        if($fecha!='1'){
+            foreach ($ingresos as $ingresos){
+                if($fecha == $ingresos->get('fechaIngreso')){
+                    $id = $ingresos->get('id');
+                    $rows .= '<tr>';
+                    $rows .= '   <td>' . $ingresos->get('nombreEstudiante') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('codigoEstudiante') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('fechaIngreso') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('horaIngreso') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('horaSalida') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('idPrograma') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('idResponsable') . '</td>';            
+                    $rows .= '   <td>' . $ingresos->get('idSala') . '</td>'; 
+                    $rows .= '   <td>' . $ingresos->get('created_at') . '</td>'; 
+                    $rows .= '   <td>' . $ingresos->get('updated_at') . '</td>'; 
+                    $rows .= '</tr>';
+                }
+            }
+        }else if (count($ingresos) > 0) {
+                foreach ($ingresos as $ingresos) {
+                    $id = $ingresos->get('id');
+                    $rows .= '<tr>';
+                    $rows .= '   <td>' . $ingresos->get('nombreEstudiante') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('codigoEstudiante') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('fechaIngreso') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('horaIngreso') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('horaSalida') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('idPrograma') . '</td>';
+                    $rows .= '   <td>' . $ingresos->get('idResponsable') . '</td>';            
+                    $rows .= '   <td>' . $ingresos->get('idSala') . '</td>'; 
+                    $rows .= '   <td>' . $ingresos->get('created_at') . '</td>'; 
+                    $rows .= '   <td>' . $ingresos->get('updated_at') . '</td>'; 
+                    $rows .= '</tr>';
+                }
+            } else {
                 $rows .= '<tr>';
-                $rows .= '   <td>' . $ingresos->get('nombreEstudiante') . '</td>';
-                $rows .= '   <td>' . $ingresos->get('codigoEstudiante') . '</td>';
-                $rows .= '   <td>' . $ingresos->get('fechaIngreso') . '</td>';
-                $rows .= '   <td>' . $ingresos->get('horaIngreso') . '</td>';
-                $rows .= '   <td>' . $ingresos->get('horaSalida') . '</td>';
-                $rows .= '   <td>' . $ingresos->get('idPrograma') . '</td>';
-                $rows .= '   <td>' . $ingresos->get('idResponsable') . '</td>';            
-                $rows .= '   <td>' . $ingresos->get('idSala') . '</td>';
+                $rows .= '   <td colspan="3">No hay datos registrados</td>';
                 $rows .= '</tr>';
             }
-        } else {
-            $rows .= '<tr>';
-            $rows .= '   <td colspan="3">No hay datos registrados</td>';
-            $rows .= '</tr>';
-        }
         $table = '<table>';
         $table .= '  <thead>';
         $table .= '     <tr>';
@@ -47,6 +67,8 @@ class AñadirViews
         $table .= '         <th>Programa</th>';
         $table .= '         <th>Responsable</th>';
         $table .= '         <th>Sala</th>';
+        $table .= '         <th>Creado</th>';
+        $table .= '         <th>Modificado</th>';
         $table .= '     </tr>';
         $table .= '  </thead>';
         $table .= ' <tbody>';

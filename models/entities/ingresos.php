@@ -30,7 +30,9 @@ class Ingreso
         $sql = ingresosQueries::selectAll();
         $db = new ingresos_salas_db();
         $result = $db->query($sql);
-        $Ingreso = [];  
+        $Ingreso = [];
+        $aux = '';
+
         while ($row = $result->fetch_assoc()) {
             $Ingresos = new Ingreso();
             $Ingresos->set('id', $row['id']);
@@ -39,13 +41,65 @@ class Ingreso
             $Ingresos->set('fechaIngreso', $row['fechaIngreso']);
             $Ingresos->set('horaIngreso', $row['horaIngreso']);
             $Ingresos->set('horaSalida', $row['horaSalida']);
-            $Ingresos->set('idPrograma', $row['idPrograma']);
-            $Ingresos->set('idResponsable', $row['idResponsable']);
-            $Ingresos->set('idSala', $row['idSala']);
+            $aux = Ingreso :: programa($row['idPrograma']);
+            $Ingresos->set('idPrograma', $aux);
+            $aux = Ingreso :: Responsable($row['idResponsable']);
+            $Ingresos->set('idResponsable', $aux);
+            $aux = Ingreso :: salas($row['idSala']);
+            $Ingresos->set('idSala', $aux);
+            $Ingresos->set('created_at', $row['created_at']);
+            $Ingresos->set('updated_at', $row['updated_at']);
+            $dato='';
             array_push($Ingreso, $Ingresos);
+
         }
         $db->close();
         return $Ingreso;
+    }
+    static function Responsable($dato) 
+    {
+        $sql = ingresosQueries::selectResponsables();
+        $db = new ingresos_salas_db();
+        $Responsable = $db->query($sql);
+        $nombre = '';
+        while ($row_2 = $Responsable->fetch_assoc()){
+            if ($row_2['id'] == $dato)
+            {
+                $nombre = $row_2['nombre'];
+                return $nombre;
+            }
+        }
+        $db->close();
+    }
+    static function programa($dato) 
+    {
+        $sql = ingresosQueries::selectprograma();
+        $db = new ingresos_salas_db();
+        $programas = $db->query($sql);
+        $nombre = '';
+        while ($row_2 = $programas->fetch_assoc()){
+            if ($row_2['id'] == $dato){
+                $nombre = $row_2['nombre'];
+                return $nombre;
+                $db->close();
+            }
+        }
+        $db->close();
+    }
+    static function salas($dato) 
+    {
+        $sql = ingresosQueries::selectsala();
+        $db = new ingresos_salas_db();
+        $Salas = $db->query($sql);
+        $nombre = '';
+        while ($row_2 = $Salas->fetch_assoc()){
+            if ($row_2['id'] == $dato){
+                $nombre = $row_2['nombre'];
+                return $nombre;
+                $db->close();
+            }
+        }
+        $db->close();
     }
     function save (){
         $sql = ingresosQueries::insert($this);
