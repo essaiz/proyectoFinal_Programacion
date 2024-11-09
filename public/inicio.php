@@ -31,26 +31,14 @@ $añadirView = new AñadirViews();
         <a href="consultar.php">Consultar ingresos</a>
         <h2>Lista de Ingresos del dia</h2>
         <?php 
-        date_default_timezone_set('America/Mexico_City'); // Cambia por tu zona horaria
+        date_default_timezone_set('America/Mexico_City');
         echo "Fecha actual: " . date("Y-m-d");
         $fecha = date('Y-m-d');
         echo $añadirView->getTable($fecha); ?>
         <br>
-        <div>
-            <div>
-                <label>Del dia </label>
-                <input type="date" name="From_date" value="<?php if(isset($_GET['from date'])) {echo $_GET['from_date']; }?>">
-            </div>  
-            <div>
-                <label>Hasta el dia</label>
-                <input type="date" name="to_date" value="<?php if(isset($_GET['from date'])) {echo $_GET['to_date']; }?>">
-            </div>  
-            <div>
-                <label> </label><br>
-                <button type="submit" class="Botton_fecha">Buscar</button>
-            </div>
-        </div>
-
+        
+        <br>
+        
     </section>
 </body>
 <style>

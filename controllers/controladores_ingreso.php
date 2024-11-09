@@ -15,7 +15,6 @@ class IngresoController
     function saveContacto($datos)
     {
         $Ingresos = new Ingreso();
-        $Ingresos->set('id', $datos['id']);
         $Ingresos->set('nombreEstudiante', $datos['nombreEstudiante']);
         $Ingresos->set('codigoEstudiante',$datos['codigoEstudiante']);
         $Ingresos->set('fechaIngreso', $datos['fechaIngreso']);
@@ -25,5 +24,8 @@ class IngresoController
         $Ingresos->set('idResponsable', $datos['idResponsable']);
         $Ingresos->set('idSala', $datos['idSala']);
         return $Ingresos->save();
+    }
+    function buscador_fechas($fromDate, $toDate){
+        return Ingreso::Between($fromDate, $toDate);
     }
 }

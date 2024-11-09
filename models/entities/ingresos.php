@@ -16,6 +16,8 @@ class Ingreso
     private $idPrograma;
     private $idResponsable;
     private $idSala;
+    private $created_at;
+    private $update_at;
     function set($prop, $value)
     {
         $this->{$prop} = $value;
@@ -107,6 +109,36 @@ class Ingreso
         $result = $db->query($sql);
         $db->close();
         return $result;
+    }
+    static function Between($fromDate, $toDate){
+        $sql = ingresosQueries::Between($fromDate, $toDate);
+        $db = new ingresos_salas_db();
+        $result = $db->query($sql);
+        $Ingreso = [];
+        $aux = '';
+
+        while ($row = $result->fetch_assoc()) {
+            $Ingresos = new Ingreso();
+            $Ingresos->set('id', $row['id']);
+            $Ingresos->set('nombreEstudiante', $row['nombreEstudiante']); 
+            $Ingresos->set('codigoEstudiante', $row['codigoEstudiante']);
+            $Ingresos->set('fechaIngreso', $row['fechaIngreso']);
+            $Ingresos->set('horaIngreso', $row['horaIngreso']);
+            $Ingresos->set('horaSalida', $row['horaSalida']);
+            $aux = Ingreso :: programa($row['idPrograma']);
+            $Ingresos->set('idPrograma', $aux);
+            $aux = Ingreso :: Responsable($row['idResponsable']);
+            $Ingresos->set('idResponsable', $aux);
+            $aux = Ingreso :: salas($row['idSala']);
+            $Ingresos->set('idSala', $aux);
+            $Ingresos->set('created_at', $row['created_at']);
+            $Ingresos->set('updated_at', $row['updated_at']);
+            $dato='';
+            array_push($Ingreso, $Ingresos);
+
+        }
+        $db->close();
+        return $Ingreso;
     }
 
 }

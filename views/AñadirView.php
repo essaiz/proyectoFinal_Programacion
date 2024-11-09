@@ -13,6 +13,32 @@ class AñadirViews
        $this->controller = new IngresoController();
     }
 
+    function getBusqueda($fromDate, $toDate){
+        $rows = '';
+        if (isset($_GET['From_date']) && isset($_GET['to_date'])) {
+            $fromDate = $_GET['From_date'];
+            $toDate = $_GET['to_date'];
+        }
+        $ingresos = $this->controller->buscador_fechas($fromDate, $toDate);
+        $form =  '<form action="Añadirview.php" method="get">';
+        $form .=     '<div class="form-container">' ;
+        $form .=         '<div class="form-grup">';
+        $form .=             '<label>Del día</label>';
+        $form .=             '<input type="date" name="From_date" value="<?php if(isset($_GET[from date])) {echo $_GET[from_date]; }?>">';
+        $form .=         '</div> ' ;
+        $form .=         '<div class="form-grup">';
+        $form .=             '<label>Hasta el día</label>';
+        $form .=             '<input type="date" name="to_date" value="<?php if(isset($_GET[from date])) {echo $_GET[to_date]; }?>">';
+        $form .=         '</div>'  ;
+        $form .=         '<div class="form-grup">';
+        $form .=             '<label> </label><br>';
+        $form .=             '<button type="submit" lass="Boton_fecha">Buscar</button>';
+        $form .=         '</div>';
+        $form .=     '</div>';
+        $form .= '</form>';
+        return $form;
+    }
+
     function getTable($fecha)
     {   
         $rows = '';
@@ -77,90 +103,81 @@ class AñadirViews
         $table .= '</table>';
         return $table;
     }
+    function getMsgNewIngresos($datosFormulario)
+    {
+        $datos = [
+            "nombreEstudiante" => $datosFormulario['nombreEstudiante'],
+            "codigoEstudiante" => $datosFormulario['codigoEstudiante'],
+            "fechaIngreso" => $datosFormulario['fechaIngreso'],
+            "horaIngreso" => $datosFormulario['horaIngreso'],
+            "horaSalida" => $datosFormulario['horaSalida'],
+            "idPrograma" => $datosFormulario['idPrograma'],
+            "idResponsable" => $datosFormulario['idResponsable'],
+            "idSala" => $datosFormulario['idSala'],
+            "created_at" => $datosFormulario['created_at'],
+        ];
+        $confirmarAccion = $this->controller->saveContacto($datos);
+        $msg = '<h2>Resultado de la operación</h2>';
+        if ($confirmarAccion) {
+            $msg .= '<p>Datos del contacto guardados.</p>';
+        } else {
+            $msg .= '<p>No se pudo guardar la información del contacto</p>';
+        }
+        return $msg;
+    }
     function getFormIngresos($data = [])
     {
-        $nombre = isset($data['nombre']) ? $data['nombre'] : '';
-        $codigo = isset($data['codigo']) ? $data['codigo'] : '';
-        $programa = isset($data['programa']) ? $data['programa'] : '';
-        $sala = isset($data['sala']) ? $data['sala'] : '';
-        $registrador = isset($data['registrador']) ? $data['registrador'] : '';
-        $rows = '';
-        $ingresos = $this->controller->getAllIngresos();
+        $nombreEstudiante = isset($data['nombre']) ? $data['nombre'] : '';
+        $codigoEstudiante = isset($data['codigo']) ? $data['codigo'] : '';
+        $fechaIngreso = isset($data['fechaIngreso']) ? $data['fechaIngreso'] : '';
+        $horaIngreso = isset($data['horaIngreso']) ? $data['horaIngreso'] : '';
+        $horaSalida = isset($data['horaSalida']) ? $data['horaSalida'] : '';
+        $idPrograma = isset($data['programa']) ? $data['programa'] : '';
+        $idResponsable = isset($data['idResponsable']) ? $data['idResponsable'] : '';
+        $idSala = isset($data['idSala']) ? $data['idSala'] : '';
+        $created_at = isset($data['created_at']) ? $data['created_at'] : '';
         $form = '<div class="container">';
         $form .= '<h2>Registrar Ingreso del Estudiante</h2>';
-        $form .= '<form method="POST" action="procesar_ingreso.php">'; 
-        $form .= '   <div class="form-group">';
-        $form .= '       <label for="codigo">Código del Estudiante:</label>';
-        $form .= '       <input type="text" id="codigo" name="codigo" value="' . $codigo . '" required>';
-        $form .= '   </div>';
+        $form .= '<form method="POST" action="confirmar.php">'; 
         $form .= '   <div class="form-group">';
         $form .= '       <label for="nombre">Nombre del Estudiante:</label>';
-        $form .= '       <input type="text" id="nombre" name="nombre" value="' . $nombre . '" required>';
+        $form .= '       <input type="text" id="nombreEstudiante" name="nombreEstudiante" value="' . $nombreEstudiante . '" required>';
         $form .= '   </div>';
         $form .= '   <div class="form-group">';
-        $form .= '       <label for="programa">Programa:</label>';
-        $form .= '       <input type="text" id="programa" name="programa" value="' . $programa . '" required>';
+        $form .= '       <label for="codigo">codigo del Estudiante:</label>';
+        $form .= '       <input type="number" id="codigoEstudiante" name="codigoEstudiante" value="' . $codigoEstudiante . '" required>';
         $form .= '   </div>';
         $form .= '   <div class="form-group">';
-        $form .= '       <label for="sala">Sala:</label>';
-        $form .= '       <input type="text" id="sala" name="sala" value="' . $sala . '" required>';
+        $form .= '       <label for="fechaIngreso">fecha Ingreso:</label>';
+        $form .= '       <input type="date" id="fechaIngreso" name="fechaIngreso" onchange="validarFecha()" value="' . $fechaIngreso . '" required>';
         $form .= '   </div>';
         $form .= '   <div class="form-group">';
-        $form .= '       <label for="registrador">Nombre del Registrador:</label>';
-        $form .= '       <input type="text" id="registrador" name="registrador" value="' . $registrador . '" required>';
+        $form .= '       <label for="horaIngreso">hora Ingreso del Estudiante:</label>';
+        $form .= '       <input type="time" id="horaIngreso" name="horaIngreso" value="' . $horaIngreso . '" required>';
+        $form .= '   </div>';
+        $form .= '   <div class="form-group">';
+        $form .= '       <label for="horaSalida">hora salida del Estudiante:</label>';
+        $form .= '       <input type="time" id="horaSalida" name="horaSalida" value="' . $horaSalida . '" required>';
+        $form .= '   </div>';
+        $form .= '   <div class="form-group">';
+        $form .= '       <label for="idPrograma">Programa:</label>';
+        $form .= '       <input type="text" id="idPrograma" name="idPrograma" value="' . $idPrograma . '" required>';
+        $form .= '   </div>';
+        $form .= '   <div class="form-group">';
+        $form .= '       <label for="idResponsable">Responsable:</label>';
+        $form .= '       <input type="text" id="idResponsable" name="idResponsable" value="' . $idResponsable . '" required>';
+        $form .= '   </div>';
+        $form .= '   <div class="form-group">';
+        $form .= '       <label for="idSala">Sala:</label>';
+        $form .= '       <input type="text" id="idSala" name="idSala" value="' . $idSala . '" required>';
+        $form .= '   </div>';
+        $form .= '   <div class="form-group">';
+        $form .= '       <label for="created_at">Creado el dia:</label>';
+        $form .= '       <input type="datetime-loca" id="created_at" name="created_at" value="' . $created_at . '" required>';
         $form .= '   </div>';
         $form .= '   <button type="submit" class="btn">Registrar Ingreso</button>';
         $form .= '</form>';
         $form .= '</div>';
-
-        // CSS
-        $form .= '<style>
-            .container {
-                max-width: 500px;
-                margin: auto;
-                padding: 20px;
-                background: #ffffff;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                text-align: left;
-            }
-            h2 {
-                color: #0056b3;
-                margin-bottom: 20px;
-                text-align: center;
-            }
-            .form-group {
-                margin-bottom: 15px;
-            }
-            label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-            input[type="text"] {
-                width: 100%;
-                padding: 8px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                font-size: 16px;
-            }
-            .btn {
-                display: block;
-                width: 100%;
-                padding: 12px;
-                background-color: #0056b3;
-                color: #ffffff;
-                border: none;
-                border-radius: 5px;
-                font-size: 16px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            }
-            .btn:hover {
-                background-color: #003f8a;
-            }
-        </style>';
-
         return $form;
     }
     function getMsgNewIngreso($datosFormulario)

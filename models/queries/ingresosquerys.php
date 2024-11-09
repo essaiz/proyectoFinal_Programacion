@@ -20,18 +20,26 @@ class ingresosQueries
     {
         return "select * from responsables";
     }
+    static function Between($fromDate, $toDate)
+    {
+        return"SELECT * FROM ingresos
+        WHERE precio BETWEEN $fromDate AND $toDate";
+    }
 
     static function insert($ingreso){
-        $nombre = $ingreso->get('nombreEstudiante');
-        $email = $ingreso->get('codigoEstudiante');
-        $telefono = $ingreso->get('fechaIngreso');
-        $telefono = $ingreso->get('horaIngreso');
-        $telefono = $ingreso->get('horaSalida');
-        $telefono = $ingreso->get('idPrograma');
-        $telefono = $ingreso->get('idResponsable');
-        $telefono = $ingreso->get('idSala');
-        $sql = "insert into ingresos (nombre,telefono,email) values ";
-        $sql .= "('$nombre','$telefono','$email')";
+        $nombreEstudiante = $ingreso->get('nombreEstudiante');
+        $codigoEstudiante = $ingreso->get('codigoEstudiante');
+        $fechaIngreso = $ingreso->get('fechaIngreso');
+        $horaIngreso = $ingreso->get('horaIngreso');
+        $horaSalida = $ingreso->get('horaSalida');
+        $idPrograma = $ingreso->get('idPrograma');
+        $idResponsable = $ingreso->get('idResponsable');
+        $idSala = $ingreso->get('idSala');
+        $created_at = $ingreso->get('created_at');
+        $sql = "insert into ingresos (nombreEstudiante,codigoEstudiante,fechaIngreso,horaIngreso,horaSalida,idPrograma,
+        idResponsable,idSala,created_at) values ";
+        $sql .= "('$nombreEstudiante','$codigoEstudiante','$fechaIngreso','$horaIngreso','$horaSalida','$idPrograma'
+        ,'$idResponsable','$idSala','$created_at')";
         return $sql;
     }
 }

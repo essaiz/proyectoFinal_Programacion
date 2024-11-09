@@ -22,57 +22,20 @@ $añadirView = new AñadirViews();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="styles/index.css">
     <title>Añadir Ingreso de Estudiante</title>
    
 </head>
 <body>
     <div class="container">
         <h1>Añadir Ingreso de Estudiante</h1>
-        <!-- formulario de ingreso -->
         <?php echo $añadirView->getFormIngresos(); ?>
 
-        <!-- tabla de contactos -->
         <h2>Lista de Ingresos</h2>
         <?php 
         $fecha = '1';
         echo $añadirView->getTable($fecha); ?>
     </div>
+    <script src="js/index.js"></script>
 </body>
-<style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</html>
-=======
-    <title>AñadirViews</title>
-</head>
-<body>
-    <header>
-        <h1>Añadir ingreso</h1>
-    </header>
-    <section>
-        <?php  
-        
-        ?>
-    </section>
-</body>
-</html>
 
