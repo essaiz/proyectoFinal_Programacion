@@ -22,8 +22,9 @@ class ingresosQueries
     }
     static function Between($fromDate, $toDate)
     {
-        return"SELECT * FROM ingresos
-        WHERE precio BETWEEN $fromDate AND $toDate";
+        
+
+        return "select * from ingresos where fechaIngreso between '$fromDate' and '$toDate'";
     }
 
     static function insert($ingreso){

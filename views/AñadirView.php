@@ -13,14 +13,54 @@ class AñadirViews
        $this->controller = new IngresoController();
     }
 
-    function getBusqueda(){
+    function mwsBusqueda($fromDate, $toDate){
         $rows = '';
-        if (isset($_GET['From_date']) && isset($_GET['to_date'])) {
-            $fromDate = $_GET['From_date'];
-            $toDate = $_GET['to_date'];
+        $ingresos = $this->controller->buscador_fechas($fromDate, $toDate);
+        if (count($ingresos) > 0) {
+            foreach ($ingresos as $ingresos) {
+                $id = $ingresos->get('id');
+                $rows .= '<tr>';
+                $rows .= '   <td>' . $ingresos->get('nombreEstudiante') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('codigoEstudiante') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('fechaIngreso') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('horaIngreso') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('horaSalida') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('idPrograma') . '</td>';
+                $rows .= '   <td>' . $ingresos->get('idResponsable') . '</td>';            
+                $rows .= '   <td>' . $ingresos->get('idSala') . '</td>'; 
+                $rows .= '   <td>' . $ingresos->get('created_at') . '</td>'; 
+                $rows .= '   <td>' . $ingresos->get('updated_at') . '</td>'; 
+                $rows .= '</tr>';
+            }
+        } else {
+            $rows .= '<tr>';
+            $rows .= '   <td colspan="3">No hay datos registrados</td>';
+            $rows .= '</tr>';
         }
-        //$ingresos = $this->controller->buscador_fechas($fromDate, $toDate);
-        $form =  '<form action="Añadirview.php" method="get">';
+    $table = '<table>';
+    $table .= '  <thead>';
+    $table .= '     <tr>';
+    $table .= '         <th>Nombre</th>';
+    $table .= '         <th>Codigo</th>';
+    $table .= '         <th>fecha Ingreso</th>';
+    $table .= '         <th>hora Ingreso</th>';
+    $table .= '         <th>hora Salida</th>';
+    $table .= '         <th>Programa</th>';
+    $table .= '         <th>Responsable</th>';
+    $table .= '         <th>Sala</th>';
+    $table .= '         <th>Creado</th>';
+    $table .= '         <th>Modificado</th>';
+    $table .= '     </tr>';
+    $table .= '  </thead>';
+    $table .= ' <tbody>';
+    $table .=  $rows;
+    $table .= ' </tbody>';
+    $table .= '</table>';
+    return $table;
+    }
+
+    function getBusqueda(){
+        $form =  '<form action="busque.php" method="get">';
         $form .=     '<div class="form-container">' ;
         $form .=         '<div class="form-grup">';
         $form .=             '<label>Del día</label>';
@@ -125,6 +165,7 @@ class AñadirViews
         }
         return $msg;
     }
+
     function getFormIngresos($data = [])
     {
         $nombreEstudiante = isset($data['nombre']) ? $data['nombre'] : '';
