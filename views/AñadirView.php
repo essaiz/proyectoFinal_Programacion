@@ -194,11 +194,11 @@ class AñadirViews
         $form .= '   </div>';
         $form .= '   <div class="form-group">';
         $form .= '       <label for="horaIngreso">hora Ingreso del Estudiante:</label>';
-        $form .= '       <input type="time" id="horaIngreso" name="horaIngreso" value="' . $horaIngreso . '" required>';
+        $form .= '       <input type="time" id="horaIngreso" name="horaIngreso" onchange="validarHorarioIngresoSalida()" value="' . $horaIngreso . '" required>';
         $form .= '   </div>';
         $form .= '   <div class="form-group">';
         $form .= '       <label for="horaSalida">hora salida del Estudiante:</label>';
-        $form .= '       <input type="time" id="horaSalida" name="horaSalida" value="' . $horaSalida . '" required>';
+        $form .= '       <input type="time" id="horaSalida" name="horaSalida" onchange="validarHorarioIngresoSalida()" value="' . $horaSalida . '" required>';
         $form .= '   </div>';
         $form .= '   <div class="form-group">';
         $form .= '       <label for="idPrograma">Programa:</label>';
@@ -236,10 +236,12 @@ class AñadirViews
 
         ];
         $confirmarAccion = $this->controller->saveContacto($datos);
-        $msg = '<h2>Resultado de la operación</h2>';
+        $msg = ''; 
         if ($confirmarAccion) {
+            $msg .= '<h2>Resultado de la operación</h2>';
             $msg .= '<p>Datos del contacto guardados.</p>';
         } else {
+            $msg .= '<h2>Resultado de la operación</h2>';
             $msg .= '<p>No se pudo guardar la información del contacto</p>';
         }
         return $msg;
