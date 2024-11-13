@@ -27,22 +27,22 @@ $añadirView = new AñadirViews();
         <p>Bienvenido al sistema de registro de ingresos a las salas de cómputo.</p>
     </header>
     <section>
-        <a href="añadir.php">Añadir ingreso de estudiante</a>
-        <br><br>
-        <a href="consultar.php">Consultar ingresos</a>
-        <h2>Lista de Ingresos del dia</h2>
-        <?php 
-        date_default_timezone_set('America/Mexico_City');
-        echo "Fecha actual: " . date("Y-m-d");
-        $fecha = date('Y-m-d');
-        echo $añadirView->getTable($fecha); ?>
-        <br>
-        <?php
-        echo $añadirView->getBusqueda();
-         ?>
+    <div class="btn-container">
+        <a href="añadir.php" class="btn-option">Añadir ingreso de estudiante</a>
+        <a href="consultar.php" class="btn-option">Consultar ingresos</a>
+    </div>
+    <h2>Lista de Ingresos del día</h2>
+    <?php 
+    date_default_timezone_set('America/Bogota');
+    echo "Fecha actual: " . date("Y-m-d");
+    $fecha = date('Y-m-d');
+    echo $añadirView->getTable($fecha); ?>
+    <br>
+    <?php
+    echo $añadirView->getBusqueda();
+    ?>
+</section>
 
-        <br>
-        
-    </section>
+
 </body>
 </html>

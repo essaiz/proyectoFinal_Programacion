@@ -28,4 +28,6 @@ class IngresoController
     function buscador_fechas($fromDate, $toDate){
         return Ingreso::Between($fromDate, $toDate);
     }
+
+    
 }
